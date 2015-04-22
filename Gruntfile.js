@@ -18,13 +18,13 @@ module.exports = function(grunt) {
         // Empties folders or files to start fresh
         clean : {
             app : {
-                src : ['js/Graffiti-Dashboard.js']
+                src : ['dev/js/Graffiti-Dashboard.js']
             },
             dependencies : {
-                src : ['dependencies/js/dependencies.js']
+                src : ['dev/dependencies/js/dependencies.js']
             },
             ie : {
-                src : ['dependencies/ie-specific/ie-specific.js']
+                src : ['dev/dependencies/ie-specific/ie-specific.js']
             }   
         },
         //Copies files from a source(src) to a destination(dest)
@@ -36,10 +36,11 @@ module.exports = function(grunt) {
                     //These are leaflet's hardcode images
                     'dependencies/css/images/*.png',
                     'dependencies/js/images/*.png',
-                    'images/*.png',
+                    'images/*.{png,jpg,ico}',
                     'dependencies/fonts/*.{eot,svg,ttf,woff}',
                     'css/main.css',
-                    'html-templates/*.html'
+                    'html-templates/*.html',
+                    'data/data.js'
                 ],
                 dest : '<%= globalConfig.dev %>',
                 expand: false
@@ -51,13 +52,20 @@ module.exports = function(grunt) {
                     //These are leaflet's hardcode images
                     'dependencies/css/images/*.png',
                     'dependencies/js/images/*.png',
-                    'images/*.png',
+                    'images/*.{png,jpg,ico}',
                     'dependencies/fonts/*.{eot,svg,ttf,woff}',
                     'css/main.css',
-                    'html-templates/*.html'
+                    'html-templates/*.html',
+                    'data/data.js'
                 ],
                 dest : '<%= globalConfig.dist %>',
                 expand : false
+            },
+            ghpages : {
+                cwd : 'dist/',
+                src : '**/*',
+                dest : '../gh-pages/Graffiti-Dashboard/',
+                expand : true
             }
         },
         //Concatenates files into a single file
@@ -91,7 +99,7 @@ module.exports = function(grunt) {
                 dest : 'dist/js/Graffiti-Dashboard.min.js'
             },
             dependencies : {
-                src : ['dist/dependencies/js/dependencies.js'],
+                src : ['dev/dependencies/js/dependencies.js'],
                 dest : 'dist/dependencies/js/dependencies.min.js'
             },
             ie : {
@@ -150,6 +158,7 @@ module.exports = function(grunt) {
         'clean', 
         'concat',
         'copy',
-        'uglify'
+        'uglify',
+        'copy:ghpages'
         ]);
 };
